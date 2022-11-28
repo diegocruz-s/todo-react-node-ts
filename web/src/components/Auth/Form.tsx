@@ -1,0 +1,90 @@
+import React, { FormEvent, useEffect, useState } from 'react'
+import { User } from '../../interfaces/User'
+
+type Props = {
+  optionLogin: boolean,
+  handleLogin: (user: User) => void
+  handleRegister: (user: User) => void
+}
+
+function Form({ optionLogin, handleLogin, handleRegister }: Props) {
+
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [name, setName] = useState('')
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    if(!email || !password) return 
+
+    if(optionLogin){
+      const user = {
+        email, password
+      }
+
+      handleLogin(user)
+    }else {
+      if(!name) return
+
+      const user = {
+        name, email, password
+      }
+
+      handleRegister(user)
+    }
+  }
+
+  const cleanForm = ()=>{
+    setEmail('')
+    setPassword('')
+    setName('')
+  }
+
+  return (
+    <div className='divForm'>
+      <form className='form' onSubmit={handleSubmit}>
+
+        { !optionLogin && (
+          <div>
+            <input 
+              type="text" 
+              placeholder='Digite seu nome' 
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+        ) }
+        
+        <div>
+          <input 
+            type="text" 
+            placeholder='Digite seu email' 
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+
+        <div>
+          <input 
+            type="password" 
+            placeholder='Digite sua senha' 
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        
+        <button type='submit'>
+          {optionLogin ? 'Entrar' : 'Registrar'}
+        </button>
+
+        <button type='button' onClick={cleanForm}>
+          Limpar
+        </button>
+
+      </form>
+    </div>  
+  )
+}
+
+export default Form
