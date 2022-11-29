@@ -1,5 +1,6 @@
 import React, { FormEvent, useEffect, useState } from 'react'
 import { User } from '../../interfaces/User'
+import styles from './Form.module.css'
 
 type Props = {
   optionLogin: boolean,
@@ -33,6 +34,9 @@ function Form({ optionLogin, handleLogin, handleRegister }: Props) {
 
       handleRegister(user)
     }
+
+    cleanForm()
+    
   }
 
   const cleanForm = ()=>{
@@ -42,8 +46,7 @@ function Form({ optionLogin, handleLogin, handleRegister }: Props) {
   }
 
   return (
-    <div className='divForm'>
-      <form className='form' onSubmit={handleSubmit}>
+      <form className={styles.form} onSubmit={handleSubmit}>
 
         { !optionLogin && (
           <div>
@@ -74,16 +77,17 @@ function Form({ optionLogin, handleLogin, handleRegister }: Props) {
           />
         </div>
         
-        <button type='submit'>
-          {optionLogin ? 'Entrar' : 'Registrar'}
-        </button>
+        <div className={styles.btnsBottomForm}>
+          <button type='submit'>
+            {optionLogin ? 'Entrar' : 'Registrar'}
+          </button>
 
-        <button type='button' onClick={cleanForm}>
-          Limpar
-        </button>
-
+          <button type='button' onClick={cleanForm}>
+            X
+          </button>
+        </div>
+        
       </form>
-    </div>  
   )
 }
 

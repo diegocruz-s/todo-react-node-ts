@@ -12,7 +12,6 @@ function App() {
   return (
     <div>
       
-      
       <Routes>
         <Route path='/' element={ datasAuthContext?.auth ? (<Home />) : (<Login />)} />
       </Routes>

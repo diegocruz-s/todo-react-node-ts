@@ -1,0 +1,33 @@
+.login{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.allContentLogin{
+    border-radius: .5em;
+    padding: 1em;
+    text-align: center;
+    width: 60%;
+}
+.btnsOptionsLogin{
+    margin-bottom: 2em;
+}
+.btnsOptionsLogin button {
+    display: inline-block;
+    cursor: pointer;
+    background-color: transparent;
+    color: #fff;
+    font-size: 1.2em;
+    border: none;
+    width: 50%;
+    padding: 1em;
+    border-bottom: 1px solid rgb(0, 255, 76);
+}
+
+
+.btnsOptionsLogin button.inactive {
+    border-bottom: 1px solid rgb(0, 139, 42);
+    color: rgb(172, 172, 172);
+}

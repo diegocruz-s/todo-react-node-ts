@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import Form from './Form'
 import { User } from '../../interfaces/User'
+import styles from './Login.module.css'
+import { Link } from 'react-router-dom'
 
 type Props = {}
 
@@ -17,25 +19,32 @@ export default function Login({}: Props) {
   const [formOptionLogin, setFormOptionLogin] = useState(true)
 
   return (
-    <div>
-        <div className='btnsOptionsLogin'>
+    <div className={styles.login}>
+        <div className={styles.allContentLogin}>
+          <div className={styles.btnsOptionsLogin}>
+            <button
+              onClick={() => setFormOptionLogin(true)} 
+              className={formOptionLogin ? styles.active : styles.inactive}
+            >
+              Login
+            </button>
 
-          <button onClick={() => setFormOptionLogin(true)}>
-            Login
-          </button>
+            <button
+              onClick={() => setFormOptionLogin(false)} 
+              className={formOptionLogin ? styles.inactive : styles.active}
+            >
+              Register
+            </button>
+          </div>
 
-          <button onClick={() => setFormOptionLogin(false)}>
-            Register
-          </button>
-
+          <div className={styles.divForm}>
+            <Form 
+              optionLogin={formOptionLogin} 
+              handleLogin={handleLogin} 
+              handleRegister={handleRegister}
+            />
+          </div>
         </div>
-
-        <Form 
-          optionLogin={formOptionLogin} 
-          handleLogin={handleLogin} 
-          handleRegister={handleRegister}
-        />
-
     </div>
   )
 }
