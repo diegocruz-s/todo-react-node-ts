@@ -1,0 +1,33 @@
+.divFormCreate{
+    margin: auto;
+    margin-top: 2em;
+    width: 95%;
+}
+.divFormCreate form {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: flex-end;
+}
+.divFormCreate form .componentForm{
+    flex: 1;
+    margin-right: 1em;
+}
+.divFormCreate form input {
+    width: 100%;
+    margin-bottom: 0;
+}
+.divFormCreate button {
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    background-color: transparent;
+    border: 1px solid #fff;
+    transition: .2s;
+    font-size: 1.5em;
+}
+.divFormCreate button:hover {
+    background-color: #eee;
+    color: #000;
+    border-color: #eee;
+}

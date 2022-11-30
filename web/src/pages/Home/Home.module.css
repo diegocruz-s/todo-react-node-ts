@@ -1,0 +1,29 @@
+.headHome{
+    width: 95%;
+    padding: .3em;
+    margin: auto;
+    font-size: 1.8em;
+    text-align: end;
+}
+.tableDiv table {
+    word-break: break-all;
+    width: 95%;
+    margin: auto;
+    text-align: center;
+    margin-top: 2.5em;
+    border-collapse: collapse;
+}
+.tableDiv table tr{
+    border-bottom: 1px solid rgb(80, 80, 80);
+}
+.tableDiv table tr td {
+    padding: .8em;
+    font-size: 1.1em;
+}
+.tableDiv table .headTable tr th{
+    padding: 1em;
+    background-color: rgb(80, 80, 80);
+}
+.tableDiv .optionsItem{
+    width: 10%;
+}

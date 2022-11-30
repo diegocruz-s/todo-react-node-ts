@@ -4,6 +4,7 @@ import { ItemContext } from '../../context/item/ItemContext'
 import { Item, ItemCreate } from '../../interfaces/Item'
 import styles from './Edit.module.css'
 import { Link } from 'react-router-dom'
+import { BsArrowLeft } from 'react-icons/bs'
 
 type Props = {
 }
@@ -47,8 +48,8 @@ function Edit({}: Props) {
   }
 
   return (
-    <div>
-        <Link to='/'>Voltar</Link>
+    <div className={styles.pageEdit}>
+        <Link to='/'><BsArrowLeft /></Link>
         { datasItem?.item && (
             <form onSubmit={handleSubmit}>
               <div>

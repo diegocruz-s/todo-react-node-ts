@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../context/auth/AuthContext'
 import { ItemContext } from '../../context/item/ItemContext'
-import { BsTrash, BsPencil, BsCheckCircleFill, BsCheckCircle } from "react-icons/bs";
+import { BsTrash, BsPencil, BsCheckCircleFill, BsCheckCircle, BsBoxArrowInRight } from "react-icons/bs";
 import styles from './Home.module.css'
 import Message from '../../components/Message/Message';
 import FormCreate from './FormCreate';
@@ -40,8 +40,7 @@ export default function Home({}: Props) {
   return (
     <div>
         <div className={styles.headHome}>
-          <h1>Home</h1>
-          <button onClick={datasAuth?.logout}>Sair</button>
+          <BsBoxArrowInRight onClick={datasAuth?.logout} />
         </div>
         
         { datasItem?.error && (
@@ -58,14 +57,14 @@ export default function Home({}: Props) {
           <div className={styles.allItems}>
               <div className={styles.tableDiv}>
                 <table>
-                  <thead>
+                  <thead className={styles.headTable}>
                     <tr>
-                      <th>#id</th>
+                      <th className={styles.optionsItem}>#</th>
                       <th>Título</th>
                       <th>Descrição</th>
-                      <th>Feito</th>
-                      <th>Editar</th>
-                      <th>Deletar</th>
+                      <th className={styles.optionsItem}>Status</th>
+                      <th className={styles.optionsItem}>Editar</th>
+                      <th className={styles.optionsItem}>Deletar</th>
                     </tr>
                   </thead>
                   <tbody>

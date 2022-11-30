@@ -28,26 +28,29 @@ function FormCreate({ createItem }: Props) {
   }
 
   return (
-    <form className='formCreate' onSubmit={handleSubmit}>
-        <div className="componentForm">
-            <input 
-                type="text"
-                placeholder='Título'
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-            />
-        </div>
-        <div className="componentForm">
-            <input 
-                type="text"
-                placeholder='Descrição'
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-            />
-        </div>
+    <div className={styles.divFormCreate}>
+        <form className={styles.formCreate} onSubmit={handleSubmit}>
+            <div className={styles.componentForm}>
+                <input 
+                    type="text"
+                    placeholder='Título'
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                />
+            </div>
+            <div className={styles.componentForm}>
+                <input 
+                    type="text"
+                    placeholder='Descrição'
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                />
+            </div>
 
-        <button type='submit'>+</button>
-    </form>
+            <button type='submit'>+</button>
+        </form>
+    </div>
+    
   )
 }
 
