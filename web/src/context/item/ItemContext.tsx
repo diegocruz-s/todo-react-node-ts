@@ -35,7 +35,6 @@ export const ItemContextProvider = ({ children }: Props) => {
         setLoading(false)
         setError(null)
         setSuccess(null)
-        setItem(null)
     }
 
     const listItem = async () => {
