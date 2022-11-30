@@ -3,8 +3,8 @@
 ## Telas do projeto
 <div float="left">
     <img height="300em" src="./imgsReadme/img1.png" />
-    <img height="300em" src="./imgsReadme/img2.png" />
-    <img height="300em" src="./imgsReadme/img3.png" />
+    <img width="800em" src="./imgsReadme/img2.png" />
+    <img width="800em" src="./imgsReadme/img3.png" />
 </div>
 
 ## Sobre
