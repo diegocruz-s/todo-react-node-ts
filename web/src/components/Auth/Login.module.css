@@ -4,12 +4,13 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
+    margin: auto;
 }
 .allContentLogin{
     border-radius: .5em;
     padding: 1em;
     text-align: center;
-    width: 60%;
+    width: 40%;
 }
 .btnsOptionsLogin{
     margin-bottom: 2em;
@@ -30,4 +31,10 @@
 .btnsOptionsLogin button.inactive {
     border-bottom: 1px solid rgb(0, 139, 42);
     color: rgb(172, 172, 172);
+}
+
+@media (max-width: 950px) {
+    .allContentLogin{
+        width: 90%;
+    }
 }

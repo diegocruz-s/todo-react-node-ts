@@ -1,0 +1,9 @@
+.error{
+    color: #f00;
+}
+.success{
+    color: aquamarine;
+}
+.msg{
+    margin-bottom: 1.2em;
+}

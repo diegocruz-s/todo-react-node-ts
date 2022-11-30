@@ -1,4 +1,5 @@
-import React, { FormEvent, useEffect, useState } from 'react'
+import React, { FormEvent, useContext, useEffect, useState } from 'react'
+import { AuthContext } from '../../context/auth/AuthContext'
 import { User } from '../../interfaces/User'
 import styles from './Form.module.css'
 
@@ -9,6 +10,8 @@ type Props = {
 }
 
 function Form({ optionLogin, handleLogin, handleRegister }: Props) {
+
+  const datasAuth = useContext(AuthContext)
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -78,9 +81,15 @@ function Form({ optionLogin, handleLogin, handleRegister }: Props) {
         </div>
         
         <div className={styles.btnsBottomForm}>
-          <button type='submit'>
-            {optionLogin ? 'Entrar' : 'Registrar'}
-          </button>
+ 
+          { datasAuth?.loading ? (
+            <button type='submit' disabled>Aguarde....</button>
+          ) : (
+            <button type='submit'>
+              {optionLogin ? 'Entrar' : 'Registrar'}
+            </button>
+          )}
+          
 
           <button type='button' onClick={cleanForm}>
             X

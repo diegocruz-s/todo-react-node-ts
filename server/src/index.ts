@@ -3,6 +3,7 @@ import userRoutes from './routes/userRoutes'
 import authRoutes from './routes/authRoutes'
 import itemRoutes from './routes/itemRoutes'
 import { prisma } from './utils/prisma'
+import cors from 'cors'
 import 'dotenv/config'
 
 class AppController {
@@ -17,6 +18,7 @@ class AppController {
 
     middlewares(){
         this.app.use(express.json())
+        this.app.use(cors())
     }
 
     routes(){
@@ -29,4 +31,4 @@ class AppController {
 
 new AppController().app.listen(3334, ()=>{
     console.log('Server running on port 3334')
-})
+}) 

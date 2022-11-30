@@ -1,19 +1,23 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Form from './Form'
 import { User } from '../../interfaces/User'
 import styles from './Login.module.css'
 import { Link } from 'react-router-dom'
+import { AuthContext } from '../../context/auth/AuthContext'
+import Message from '../Message/Message'
 
 type Props = {}
 
 export default function Login({}: Props) {
 
+  const datasAuth = useContext(AuthContext)
+
   const handleLogin = (user: User) => {
-    console.log('Login', user)
+    datasAuth?.login(user)
   }
 
   const handleRegister = (user: User) => {
-    console.log('Register', user)
+    datasAuth?.register(user)
   }
 
   const [formOptionLogin, setFormOptionLogin] = useState(true)
@@ -37,6 +41,10 @@ export default function Login({}: Props) {
             </button>
           </div>
 
+          { datasAuth?.error && (
+            <Message msg={datasAuth?.error} type='error' />
+          ) }
+
           <div className={styles.divForm}>
             <Form 
               optionLogin={formOptionLogin} 
@@ -44,6 +52,7 @@ export default function Login({}: Props) {
               handleRegister={handleRegister}
             />
           </div>
+
         </div>
     </div>
   )

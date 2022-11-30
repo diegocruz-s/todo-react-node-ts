@@ -2,6 +2,7 @@ import { prisma } from "../utils/prisma";
 import { Request, Response } from "express";
 import { z } from 'zod'
 import { hashSync } from "bcryptjs";
+import { generateToken } from "../utils/generateToken";
 
 class UserController {
 
@@ -10,11 +11,13 @@ class UserController {
         try {
             const userInfoSchema = z.object({
                 name: z.string(),
-                email: z.string().email(),
-                password: z.string().min(6) 
-            }) 
+                email: z.string().email({ message: 'Email inválido' }),
+                password: z.string().min(6, { message: 'Senha deve ter no mínimo 6 caracteres' }) 
+            })
     
             const userInfo = userInfoSchema.parse(req.body)
+
+            console.log(userInfo)
     
             const userExists = await prisma.user.findUnique({ where: { email: userInfo.email } })
     
@@ -36,11 +39,21 @@ class UserController {
                     id: true
                 }  
             })
-    
-            return res.status(201).json({ user: newUser })
+
+            const token = generateToken(newUser)
+                
+            return res.status(201).json({ user: newUser, token })
         } catch (error: any) {
             console.log(`Error: ${error}`)
-            return res.status(500).json({ error: error.message })
+
+            const allErrors: string[] = []
+
+            if(error.issues){
+                error.issues.map((err: any) => {
+                    allErrors.push(err.message)
+                })
+            }
+            return res.status(500).json({ error: allErrors[0] })
         }
         
 
@@ -85,7 +98,7 @@ class UserController {
 
         const userUpdateOptions = userUpdateSchema.parse(req.body)
 
-        const hash_password = hashSync(userUpdateOptions.password, 10)
+        const hash_password = hashSync(userUpdateOptions.password!, 10)
 
         const newUserUpdate = {
             id: idUser,

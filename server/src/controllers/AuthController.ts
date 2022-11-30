@@ -8,7 +8,7 @@ class AuthController {
     async login(req: Request, res: Response){
         try {
             const userSchemaLogin = z.object({
-                email: z.string().email(),
+                email: z.string().email({ message: 'Autenticação inválida' }),
                 password: z.string()
             })
     
@@ -17,7 +17,7 @@ class AuthController {
             const user = await prisma.user.findUnique({ where: { email: userLogin.email } })
 
             if(!user){
-                return res.status(404).json({ error: 'Usuário não encontrado' })
+                return res.status(404).json({ error: 'Autenticação inválida' })
             }
 
             const checkPassword = compareSync(userLogin.password, user.password)
@@ -35,7 +35,13 @@ class AuthController {
             )
         } catch (error: any) {
             console.log(`Error: ${error.message}`)
-            return res.status(500).json({ error: error.message })
+            const allErrors: string[] = []
+            if(error.issues){
+                error.issues.map((err: any) => {
+                    allErrors.push(err.message)
+                })
+            }
+            return res.status(500).json({ error: allErrors[0] })
         }
         
     }
