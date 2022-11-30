@@ -9,5 +9,6 @@ router.post('/', checkAuth, ItemController.create)
 router.delete('/:id', checkAuth, ItemController.delete)
 router.patch('/:id', checkAuth, ItemController.update)
 router.patch('/checkitem/:id', checkAuth, ItemController.checkItem)
+router.get('/:id', checkAuth, ItemController.findById)
 
 export default router

@@ -7,7 +7,7 @@ class ItemController {
     async create(req: Request, res: Response){
         try {
             const itemSchema = z.object({
-                title: z.string().min(5),
+                title: z.string().min(5, { message: 'Título deve ter no mínimo 5 caracteres' }),
                 description: z.string(),
             })
 
@@ -28,11 +28,18 @@ class ItemController {
                 return res.status(422).json({ error: 'Erro na criação do item' })
             }
 
-            return res.status(201).json({ item: newItem })
+            return res.status(201).json({ item: newItem, message: 'Item criado com sucesso' })
 
         } catch (error: any) {
             console.log(`Error: ${error}`)
-            return res.status(500).json({ error: error.message })
+            if(error.issues){
+                const allErrors: string[] = []
+                error.issues.map((err: any) => {
+                    allErrors.push(err.message)
+                })
+
+                return res.status(500).json({ error: allErrors[0] })
+            }
         }
         
     }
@@ -54,6 +61,34 @@ class ItemController {
         } catch (error: any) {
             console.log(`Error: ${error}`)
             return res.status(500).json({ error: error.message })
+        }
+    }
+
+    async findById(req: Request, res: Response){
+        try {
+            const { id } = req.params
+
+            const item = await prisma.item.findUnique({
+                where: {
+                    id: +id
+                },
+            })
+
+            if(!item){
+                return res.status(404).json({ error: 'Item não encontrado' })
+            }
+
+            const idUser = req.userId
+
+            if(+idUser! !== item.userId){
+                return res.status(422).json({ error: 'Esse item não foi criado por você' })
+            }
+
+            return res.status(200).json({ item })
+
+        } catch (error: any) {
+            console.log(`Error: ${error.message}`)
+            return res.status(500).json({ error: 'Erro ao buscar o item' })
         }
     }
 
@@ -85,7 +120,7 @@ class ItemController {
     async update(req: Request, res: Response){
         try {
             const itemSchema = z.object({
-                title: z.string().min(5),
+                title: z.string().min(5, { message: 'O título deve ter pelo menos 5 caracteres' }),
                 description: z.string(),
             })
 
@@ -100,7 +135,7 @@ class ItemController {
                 return res.status(404).json({ error: 'Item não encontrado' })
             }
 
-            const user = await prisma.item.findUnique({ where: { id: idUser } })
+            const user = await prisma.user.findUnique({ where: { id: idUser } })
 
             if(!user){
                 return res.status(404).json({ error: 'Usuário não encontrado' })
@@ -120,17 +155,26 @@ class ItemController {
                 },
               })
 
-            return res.status(200).json({ item: newItemUpdate })
+            return res.status(200).json({ item: newItemUpdate, message: 'Item atualizado' })
             
         } catch (error: any) {
-            console.log(`Error: ${error}`)
-            return res.status(500).json({ error: error.message })
+            const allErrors: string[] = []
+            if(error.issues){
+                error.issues.map((err: any) => {
+                    allErrors.push(err.message)
+                })
+            }
+            return res.status(500).json({ error: allErrors[0] })
         }
     }
 
     async checkItem(req: Request, res: Response){
         try {
             const { id } = req.params
+            const objValidateBody = z.object({
+                valueCheck: z.boolean()
+            })
+            const reqBody = objValidateBody.parse(req.body)
 
             const idUser = req.userId
 
@@ -143,16 +187,12 @@ class ItemController {
                 return res.status(404).json({ error: 'Item não encontrado' })
             }
 
-            if(itemUpdate.checkItem){
-                return res.status(200).json({ message: 'Item atualizado' })
-            }
-
             await prisma.item.update({
                 where: {
                     id: itemUpdate.id
                 },
                 data: {
-                    checkItem: true
+                    checkItem: reqBody.valueCheck
                 }
             })
 
